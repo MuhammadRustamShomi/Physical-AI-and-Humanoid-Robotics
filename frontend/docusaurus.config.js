@@ -49,8 +49,9 @@ const config = {
           sidebarPath: './sidebars.js',
           remarkPlugins: [remarkMath],
           rehypePlugins: [rehypeKatex],
-          showLastUpdateTime: true,
-          showLastUpdateAuthor: true,
+          // Disabled for Vercel deployment (no git history in build environment)
+          showLastUpdateTime: false,
+          showLastUpdateAuthor: false,
         },
         blog: false,
         theme: {
