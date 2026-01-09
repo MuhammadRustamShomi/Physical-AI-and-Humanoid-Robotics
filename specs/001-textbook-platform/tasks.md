@@ -25,14 +25,14 @@
 
 **Purpose**: Project initialization and basic structure
 
-- [ ] T001 Create frontend directory and initialize Docusaurus 3.x project in frontend/
-- [ ] T002 Create backend directory and initialize Python project with FastAPI in backend/
-- [ ] T003 [P] Create frontend/package.json with Docusaurus dependencies and scripts
-- [ ] T004 [P] Create backend/requirements.txt with FastAPI, uvicorn, qdrant-client, openai, anthropic, psycopg2-binary, pydantic-settings dependencies
-- [ ] T005 [P] Create backend/.env.example with OPENAI_API_KEY, QDRANT_API_KEY, QDRANT_URL, NEON_DATABASE_URL, FRONTEND_URL, ENVIRONMENT placeholders
-- [ ] T006 [P] Create frontend/docusaurus.config.js with site metadata, theme configuration, and preset settings
-- [ ] T007 [P] Create backend/app/config/settings.py with Pydantic BaseSettings for environment variable loading
-- [ ] T008 Create .gitignore with node_modules/, venv/, .env, __pycache__/, .docusaurus/ entries
+- [x] T001 Create frontend directory and initialize Docusaurus 3.x project in frontend/
+- [x] T002 Create backend directory and initialize Python project with FastAPI in backend/
+- [x] T003 [P] Create frontend/package.json with Docusaurus dependencies and scripts
+- [x] T004 [P] Create backend/requirements.txt with FastAPI, uvicorn, qdrant-client, openai, anthropic, psycopg2-binary, pydantic-settings dependencies
+- [x] T005 [P] Create backend/.env.example with OPENAI_API_KEY, QDRANT_API_KEY, QDRANT_URL, NEON_DATABASE_URL, FRONTEND_URL, ENVIRONMENT placeholders
+- [x] T006 [P] Create frontend/docusaurus.config.js with site metadata, theme configuration, and preset settings
+- [x] T007 [P] Create backend/app/config/settings.py with Pydantic BaseSettings for environment variable loading
+- [x] T008 Create .gitignore with node_modules/, venv/, .env, __pycache__/, .docusaurus/ entries
 
 ---
 
@@ -42,19 +42,19 @@
 
 **CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T009 Create frontend/sidebars.js with 6-module curriculum structure (Physical AI Foundations, ROS 2 Nervous System, Digital Twins, NVIDIA Isaac Platform, Vision-Language-Action, Conversational Humanoid Capstone)
-- [ ] T010 [P] Create backend/main.py with FastAPI app initialization, CORS middleware, and router includes
-- [ ] T011 [P] Create backend/app/api/health.py with GET /health endpoint returning qdrant and database connection status
-- [ ] T012 [P] Create frontend/docs/mod-1-physical-ai/ directory with _category_.json and intro.md placeholder
-- [ ] T013 [P] Create frontend/docs/mod-2-ros2/ directory with _category_.json and intro.md placeholder
-- [ ] T014 [P] Create frontend/docs/mod-3-digital-twins/ directory with _category_.json and intro.md placeholder
-- [ ] T015 [P] Create frontend/docs/mod-4-isaac/ directory with _category_.json and intro.md placeholder
-- [ ] T016 [P] Create frontend/docs/mod-5-vla/ directory with _category_.json and intro.md placeholder
-- [ ] T017 [P] Create frontend/docs/mod-6-capstone/ directory with _category_.json and intro.md placeholder
-- [ ] T018 Create backend/app/models/session.py with ChatSession Pydantic model (id, created_at, updated_at, expires_at, metadata)
-- [ ] T019 Create backend/app/models/message.py with Message Pydantic model (id, session_id, role, content, created_at, chapter_id, selected_text, sources)
-- [ ] T020 [P] Create backend/scripts/embed_content.py with CLI for embedding Markdown content to Qdrant
-- [ ] T021 [P] Create backend/app/services/embeddings.py with OpenAI text-embedding-3-small integration
+- [x] T009 Create frontend/sidebars.js with 6-module curriculum structure (Physical AI Foundations, ROS 2 Nervous System, Digital Twins, NVIDIA Isaac Platform, Vision-Language-Action, Conversational Humanoid Capstone)
+- [x] T010 [P] Create backend/main.py with FastAPI app initialization, CORS middleware, and router includes
+- [x] T011 [P] Create backend/app/api/health.py with GET /health endpoint returning qdrant and database connection status
+- [x] T012 [P] Create frontend/docs/mod-1-physical-ai/ directory with _category_.json and intro.md placeholder
+- [x] T013 [P] Create frontend/docs/mod-2-ros2/ directory with _category_.json and intro.md placeholder
+- [x] T014 [P] Create frontend/docs/mod-3-digital-twins/ directory with _category_.json and intro.md placeholder
+- [x] T015 [P] Create frontend/docs/mod-4-isaac/ directory with _category_.json and intro.md placeholder
+- [x] T016 [P] Create frontend/docs/mod-5-vla/ directory with _category_.json and intro.md placeholder
+- [x] T017 [P] Create frontend/docs/mod-6-capstone/ directory with _category_.json and intro.md placeholder
+- [x] T018 Create backend/app/models/session.py with ChatSession Pydantic model (id, created_at, updated_at, expires_at, metadata)
+- [x] T019 Create backend/app/models/message.py with Message Pydantic model (id, session_id, role, content, created_at, chapter_id, selected_text, sources)
+- [x] T020 [P] Create backend/scripts/embed_content.py with CLI for embedding Markdown content to Qdrant
+- [x] T021 [P] Create backend/app/services/embeddings.py with OpenAI text-embedding-3-small integration
 
 **Checkpoint**: Foundation ready - user story implementation can now begin
 
@@ -68,18 +68,18 @@
 
 ### Implementation for User Story 1
 
-- [ ] T022 [US1] Create frontend/docs/mod-1-physical-ai/ch-01-intro-embodied-ai.md with sample chapter content including code block, heading hierarchy, and hardware requirements frontmatter
-- [ ] T023 [P] [US1] Create frontend/docs/mod-2-ros2/ch-01-ros2-fundamentals.md with sample chapter including Python code block with syntax highlighting
-- [ ] T024 [P] [US1] Create frontend/docs/mod-3-digital-twins/ch-01-gazebo-intro.md with sample chapter including C++ code and diagram placeholder
-- [ ] T025 [P] [US1] Create frontend/docs/mod-4-isaac/ch-01-isaac-sim-setup.md with sample chapter including hardware requirements (RTX GPU) in frontmatter
-- [ ] T026 [P] [US1] Create frontend/docs/mod-5-vla/ch-01-vla-overview.md with sample chapter including mathematical notation using KaTeX
-- [ ] T027 [P] [US1] Create frontend/docs/mod-6-capstone/ch-01-project-overview.md with sample chapter including resource_type: both in frontmatter
-- [ ] T028 [US1] Update frontend/docusaurus.config.js to enable prism syntax highlighting for Python, C++, YAML, bash languages
-- [ ] T029 [US1] Configure frontend/docusaurus.config.js to enable KaTeX math rendering plugin
-- [ ] T030 [US1] Create frontend/src/components/HardwareRequirements/index.js React component to display hardware requirements from frontmatter (FR-011)
-- [ ] T031 [US1] Create frontend/src/components/ResourceType/index.js React component to display cloud/on-prem badge from frontmatter (FR-012)
-- [ ] T032 [US1] Create frontend/src/css/custom.css with typography styles for chapter content, code blocks, and admonitions
-- [ ] T033 [US1] Add previous/next chapter navigation by verifying frontend/docusaurus.config.js docs plugin pagination settings (FR-010)
+- [x] T022 [US1] Create frontend/docs/mod-1-physical-ai/ch-01-intro-embodied-ai.md with sample chapter content including code block, heading hierarchy, and hardware requirements frontmatter
+- [x] T023 [P] [US1] Create frontend/docs/mod-2-ros2/ch-01-ros2-fundamentals.md with sample chapter including Python code block with syntax highlighting
+- [x] T024 [P] [US1] Create frontend/docs/mod-3-digital-twins/ch-01-gazebo-intro.md with sample chapter including C++ code and diagram placeholder
+- [x] T025 [P] [US1] Create frontend/docs/mod-4-isaac/ch-01-isaac-sim-setup.md with sample chapter including hardware requirements (RTX GPU) in frontmatter
+- [x] T026 [P] [US1] Create frontend/docs/mod-5-vla/ch-01-vla-overview.md with sample chapter including mathematical notation using KaTeX
+- [x] T027 [P] [US1] Create frontend/docs/mod-6-capstone/ch-01-project-overview.md with sample chapter including resource_type: both in frontmatter
+- [x] T028 [US1] Update frontend/docusaurus.config.js to enable prism syntax highlighting for Python, C++, YAML, bash languages
+- [x] T029 [US1] Configure frontend/docusaurus.config.js to enable KaTeX math rendering plugin
+- [x] T030 [US1] Create frontend/src/components/HardwareRequirements/index.js React component to display hardware requirements from frontmatter (FR-011)
+- [x] T031 [US1] Create frontend/src/components/ResourceType/index.js React component to display cloud/on-prem badge from frontmatter (FR-012)
+- [x] T032 [US1] Create frontend/src/css/custom.css with typography styles for chapter content, code blocks, and admonitions
+- [x] T033 [US1] Add previous/next chapter navigation by verifying frontend/docusaurus.config.js docs plugin pagination settings (FR-010)
 
 **Checkpoint**: User Story 1 complete - readers can browse and read formatted chapter content
 
@@ -93,20 +93,20 @@
 
 ### Implementation for User Story 2
 
-- [ ] T034 [US2] Create backend/app/api/chat.py with POST /chat/message endpoint per contracts/chat-api.yaml
-- [ ] T035 [US2] Create backend/app/api/chat.py GET /chat/session/{session_id} endpoint per contracts/chat-api.yaml
-- [ ] T036 [US2] Create backend/app/services/rag.py with RAGQueryEngine class implementing query augmentation, Qdrant retrieval, context building, and LLM generation
-- [ ] T037 [US2] Create backend/app/services/oos_detector.py with OutOfScopeDetector class implementing keyword blacklist, semantic relevance scoring, and module classification (SC-008)
-- [ ] T038 [US2] Update backend/main.py to include chat router from backend/app/api/chat.py
-- [ ] T039 [US2] Create frontend/src/contexts/ChatContext.js with React Context for chat state (sessionId, chatHistory, currentChapter)
-- [ ] T040 [US2] Create frontend/src/hooks/useChat.js with sendMessage and getSession functions calling backend API
-- [ ] T041 [US2] Create frontend/src/components/ChatWidget/index.js with chat interface UI (message list, input field, send button)
-- [ ] T042 [US2] Create frontend/src/components/ChatWidget/ChatMessage.js for rendering user/assistant messages with source citations
-- [ ] T043 [US2] Create frontend/src/components/ChatWidget/SelectionHandler.js with mouseup event listener and "Ask about this" tooltip button
-- [ ] T044 [US2] Swizzle Docusaurus Footer by running npx docusaurus swizzle @docusaurus/theme-classic Footer --wrap and integrate ChatWidget in frontend/src/theme/Footer/index.js
-- [ ] T045 [US2] Create frontend/src/components/ChatWidget/styles.module.css with chat widget positioning (bottom-right), light/dark theme support, and responsive sizing
-- [ ] T046 [US2] Add graceful error handling in frontend/src/hooks/useChat.js for backend unavailability with retry option
-- [ ] T047 [US2] Implement conversation context in backend/app/services/rag.py to maintain context from previous exchanges (FR-007)
+- [x] T034 [US2] Create backend/app/api/chat.py with POST /chat/message endpoint per contracts/chat-api.yaml
+- [x] T035 [US2] Create backend/app/api/chat.py GET /chat/session/{session_id} endpoint per contracts/chat-api.yaml
+- [x] T036 [US2] Create backend/app/services/rag.py with RAGQueryEngine class implementing query augmentation, Qdrant retrieval, context building, and LLM generation
+- [x] T037 [US2] Create backend/app/services/oos_detector.py with OutOfScopeDetector class implementing keyword blacklist, semantic relevance scoring, and module classification (SC-008)
+- [x] T038 [US2] Update backend/main.py to include chat router from backend/app/api/chat.py
+- [x] T039 [US2] Create frontend/src/contexts/ChatContext.js with React Context for chat state (sessionId, chatHistory, currentChapter)
+- [x] T040 [US2] Create frontend/src/hooks/useChat.js with sendMessage and getSession functions calling backend API
+- [x] T041 [US2] Create frontend/src/components/ChatWidget/index.js with chat interface UI (message list, input field, send button)
+- [x] T042 [US2] Create frontend/src/components/ChatWidget/ChatMessage.js for rendering user/assistant messages with source citations
+- [x] T043 [US2] Create frontend/src/components/ChatWidget/SelectionHandler.js with mouseup event listener and "Ask about this" tooltip button
+- [x] T044 [US2] Swizzle Docusaurus Root component and integrate ChatWidget in frontend/src/theme/Root/index.js (used Root wrapper instead of Footer for better provider integration)
+- [x] T045 [US2] Create frontend/src/components/ChatWidget/styles.module.css with chat widget positioning (bottom-right), light/dark theme support, and responsive sizing
+- [x] T046 [US2] Add graceful error handling in frontend/src/hooks/useChat.js for backend unavailability with retry option
+- [x] T047 [US2] Implement conversation context in backend/app/services/rag.py to maintain context from previous exchanges (FR-007)
 
 **Checkpoint**: User Story 2 complete - readers can ask questions and receive RAG-powered answers
 
@@ -120,12 +120,12 @@
 
 ### Implementation for User Story 3
 
-- [ ] T048 [US3] Update frontend/src/css/custom.css with responsive breakpoints for mobile (320px+), tablet (768px+), desktop (1024px+) viewports (FR-008)
-- [ ] T049 [US3] Configure frontend/docusaurus.config.js navbar to collapse into hamburger menu on mobile via themeConfig settings
-- [ ] T050 [US3] Update frontend/src/components/ChatWidget/styles.module.css with responsive sizing (full-width on mobile, fixed-width on desktop)
-- [ ] T051 [US3] Update frontend/src/components/HardwareRequirements/index.js with responsive layout for mobile display
-- [ ] T052 [US3] Add keyboard navigation support in frontend/src/components/ChatWidget/index.js (Tab focus, Enter to send) (FR-009)
-- [ ] T053 [US3] Verify sidebar navigation visibility on tablet in frontend/docusaurus.config.js docs plugin settings
+- [x] T048 [US3] Update frontend/src/css/custom.css with responsive breakpoints for mobile (320px+), tablet (768px+), desktop (1024px+) viewports (FR-008)
+- [x] T049 [US3] Configure frontend/docusaurus.config.js navbar to collapse into hamburger menu on mobile via themeConfig settings
+- [x] T050 [US3] Update frontend/src/components/ChatWidget/styles.module.css with responsive sizing (full-width on mobile, fixed-width on desktop)
+- [x] T051 [US3] Update frontend/src/components/HardwareRequirements/index.js with responsive layout for mobile display
+- [x] T052 [US3] Add keyboard navigation support in frontend/src/components/ChatWidget/index.js (Tab focus, Enter to send) (FR-009)
+- [x] T053 [US3] Verify sidebar navigation visibility on tablet in frontend/docusaurus.config.js docs plugin settings
 
 **Checkpoint**: User Story 3 complete - site is fully responsive across all device sizes
 
@@ -139,11 +139,11 @@
 
 ### Implementation for User Story 4
 
-- [ ] T054 [US4] Configure frontend/docusaurus.config.js with @docusaurus/plugin-search-local or @easyops-cn/docusaurus-search-local for offline search
-- [ ] T055 [US4] Create frontend/src/css/custom.css styles for search modal, result highlighting, and keyboard shortcut hint (Ctrl+K)
-- [ ] T056 [US4] Verify search returns results within 1 second by testing with sample content (SC-005)
-- [ ] T057 [US4] Configure search plugin in frontend/docusaurus.config.js to index all docs/ content and display chapter titles, section headings, and text snippets
-- [ ] T058 [US4] Add fuzzy matching configuration in search plugin settings to handle common misspellings
+- [x] T054 [US4] Configure frontend/docusaurus.config.js with @easyops-cn/docusaurus-search-local for offline search
+- [x] T055 [US4] Create frontend/src/css/custom.css styles for search modal, result highlighting, and keyboard shortcut hint (Ctrl+K)
+- [x] T056 [US4] Verify search returns results within 1 second by testing with sample content (SC-005)
+- [x] T057 [US4] Configure search plugin in frontend/docusaurus.config.js to index all docs/ content and display chapter titles, section headings, and text snippets
+- [x] T058 [US4] Add fuzzy matching configuration in search plugin settings to handle common misspellings
 
 **Checkpoint**: User Story 4 complete - readers can search across all textbook content
 
@@ -153,15 +153,15 @@
 
 **Purpose**: Improvements that affect multiple user stories and deployment readiness
 
-- [ ] T059 [P] Create vercel.json in frontend/ for Vercel deployment configuration
-- [ ] T060 [P] Create railway.json in backend/ for Railway deployment configuration
-- [ ] T061 [P] Create Dockerfile in backend/ for containerized deployment
-- [ ] T062 Run Lighthouse accessibility audit on frontend and address issues to achieve score 90+ (SC-004)
-- [ ] T063 [P] Create backend/scripts/init_db.py to run database schema migrations from data-model.md SQL
-- [ ] T064 Test cross-browser compatibility on Chrome, Firefox, Safari, Edge latest 2 versions (SC-006)
-- [ ] T065 Verify mobile users can complete all core tasks without horizontal scrolling (SC-007)
-- [ ] T066 Create frontend/static/img/ directory with placeholder images for diagrams referenced in chapters
-- [ ] T067 Update README.md at repository root with project overview, setup instructions, and links to specs/
+- [x] T059 [P] Create vercel.json in frontend/ for Vercel deployment configuration
+- [x] T060 [P] Create railway.json in backend/ for Railway deployment configuration
+- [x] T061 [P] Create Dockerfile in backend/ for containerized deployment
+- [ ] T062 Run Lighthouse accessibility audit on frontend and address issues to achieve score 90+ (SC-004) *(Manual verification required)*
+- [x] T063 [P] Create backend/scripts/init_db.py to run database schema migrations from data-model.md SQL
+- [ ] T064 Test cross-browser compatibility on Chrome, Firefox, Safari, Edge latest 2 versions (SC-006) *(Manual verification required)*
+- [ ] T065 Verify mobile users can complete all core tasks without horizontal scrolling (SC-007) *(Manual verification required)*
+- [x] T066 Create frontend/static/img/ directory with placeholder images for diagrams referenced in chapters
+- [x] T067 Update README.md at repository root with project overview, setup instructions, and links to specs/
 
 ---
 
@@ -282,16 +282,16 @@ With multiple developers:
 
 ## Task Summary
 
-| Phase | Tasks | Parallel Opportunities |
-|-------|-------|----------------------|
-| Phase 1: Setup | 8 tasks (T001-T008) | 6 parallelizable |
-| Phase 2: Foundational | 13 tasks (T009-T021) | 11 parallelizable |
-| Phase 3: US1 - Read Content | 12 tasks (T022-T033) | 6 parallelizable |
-| Phase 4: US2 - RAG Chatbot | 14 tasks (T034-T047) | 8 parallelizable |
-| Phase 5: US3 - Responsive | 6 tasks (T048-T053) | 3 parallelizable |
-| Phase 6: US4 - Search | 5 tasks (T054-T058) | 0 (sequential) |
-| Phase 7: Polish | 9 tasks (T059-T067) | 6 parallelizable |
-| **Total** | **67 tasks** | **40 parallelizable (60%)** |
+| Phase | Tasks | Completed | Remaining |
+|-------|-------|-----------|-----------|
+| Phase 1: Setup | 8 tasks (T001-T008) | 8 | 0 |
+| Phase 2: Foundational | 13 tasks (T009-T021) | 13 | 0 |
+| Phase 3: US1 - Read Content | 12 tasks (T022-T033) | 12 | 0 |
+| Phase 4: US2 - RAG Chatbot | 14 tasks (T034-T047) | 14 | 0 |
+| Phase 5: US3 - Responsive | 6 tasks (T048-T053) | 6 | 0 |
+| Phase 6: US4 - Search | 5 tasks (T054-T058) | 5 | 0 |
+| Phase 7: Polish | 9 tasks (T059-T067) | 6 | 3 (manual) |
+| **Total** | **67 tasks** | **64** | **3** |
 
 ---
 
@@ -303,3 +303,11 @@ With multiple developers:
 - Commit after each task or logical group
 - Stop at any checkpoint to validate story independently
 - Avoid: vague tasks, same file conflicts, cross-story dependencies that break independence
+
+## Remaining Manual Verification Tasks
+
+The following tasks require manual verification and cannot be auto-completed:
+
+1. **T062**: Lighthouse accessibility audit - Run `npx lighthouse http://localhost:3000 --view` and verify score >= 90
+2. **T064**: Cross-browser testing - Test on Chrome, Firefox, Safari, Edge (latest 2 versions)
+3. **T065**: Mobile verification - Test core tasks on mobile device without horizontal scrolling
