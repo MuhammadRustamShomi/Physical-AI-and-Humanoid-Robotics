@@ -1,0 +1,341 @@
+openapi: 3.1.0
+info:
+  title: Textbook Platform Chat API
+  description: RAG-powered chatbot API for Physical AI & Humanoid Robotics textbook
+  version: 1.0.0
+  contact:
+    name: Textbook Platform Team
+
+servers:
+  - url: http://localhost:8000/api/v1
+    description: Local development
+  - url: https://textbook-api.railway.app/api/v1
+    description: Production (Railway)
+
+paths:
+  /chat/message:
+    post:
+      summary: Send a chat message
+      description: |
+        Submit a user question to the RAG chatbot.
+        Returns an answer derived strictly from textbook content (FR-006).
+        Supports selected text context for contextual questions (FR-007).
+      operationId: sendChatMessage
+      tags:
+        - Chat
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChatMessageRequest'
+            examples:
+              simple_question:
+                summary: Simple question
+                value:
+                  session_id: "sess-abc123"
+                  chapter_id: "ch-2-3"
+                  user_message: "What are ROS 2 topics?"
+              with_selection:
+                summary: Question about selected text
+                value:
+                  session_id: "sess-abc123"
+                  chapter_id: "ch-2-3"
+                  user_message: "How does this differ from services?"
+                  selected_text: "Topics use publish-subscribe pattern"
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatMessageResponse'
+              examples:
+                in_scope:
+                  summary: In-scope answer
+                  value:
+                    session_id: "sess-abc123"
+                    response: "ROS 2 topics are named buses for asynchronous communication..."
+                    sources:
+                      - chunk_id: "cb-xyz789"
+                        chapter_id: "ch-2-3"
+                        section: "2.3.1 ROS 2 Topics"
+                        excerpt: "Topics use publish-subscribe..."
+                        relevance_score: 0.92
+                    is_out_of_scope: false
+                out_of_scope:
+                  summary: Out-of-scope response
+                  value:
+                    session_id: "sess-abc123"
+                    response: "I can only answer questions about the textbook content..."
+                    sources: []
+                    is_out_of_scope: true
+                    suggested_topics:
+                      - "ROS 2 Nervous System"
+                      - "Node Communication Patterns"
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /chat/session/{session_id}:
+    get:
+      summary: Get chat session
+      description: Retrieve full chat history for a session
+      operationId: getChatSession
+      tags:
+        - Chat
+      parameters:
+        - name: session_id
+          in: path
+          required: true
+          schema:
+            type: string
+          example: "sess-abc123"
+      responses:
+        '200':
+          description: Session found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatSession'
+        '404':
+          description: Session not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /embeddings/search:
+    post:
+      summary: Search textbook embeddings
+      description: Semantic search across textbook content (used internally by chat)
+      operationId: searchEmbeddings
+      tags:
+        - Embeddings
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmbeddingSearchRequest'
+      responses:
+        '200':
+          description: Search results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmbeddingSearchResponse'
+
+  /health:
+    get:
+      summary: Health check
+      description: Verify API is running and dependencies are connected
+      operationId: healthCheck
+      tags:
+        - System
+      responses:
+        '200':
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "healthy"
+                  qdrant:
+                    type: string
+                    example: "connected"
+                  database:
+                    type: string
+                    example: "connected"
+
+components:
+  schemas:
+    ChatMessageRequest:
+      type: object
+      required:
+        - session_id
+        - chapter_id
+        - user_message
+      properties:
+        session_id:
+          type: string
+          description: Client-generated session identifier
+          example: "sess-abc123"
+        chapter_id:
+          type: string
+          description: Current chapter for context
+          example: "ch-2-3"
+        user_message:
+          type: string
+          description: User's question
+          maxLength: 2000
+          example: "What are ROS 2 topics?"
+        selected_text:
+          type: string
+          description: Text highlighted by user (FR-007)
+          maxLength: 5000
+          example: "Topics use publish-subscribe pattern"
+
+    ChatMessageResponse:
+      type: object
+      required:
+        - session_id
+        - response
+        - sources
+        - is_out_of_scope
+      properties:
+        session_id:
+          type: string
+          example: "sess-abc123"
+        response:
+          type: string
+          description: Assistant's answer
+          example: "ROS 2 topics are named buses..."
+        sources:
+          type: array
+          items:
+            $ref: '#/components/schemas/Source'
+        is_out_of_scope:
+          type: boolean
+          description: True if question outside textbook content (SC-008)
+          example: false
+        suggested_topics:
+          type: array
+          items:
+            type: string
+          description: Related topics when out-of-scope
+
+    Source:
+      type: object
+      properties:
+        chunk_id:
+          type: string
+          example: "cb-xyz789"
+        chapter_id:
+          type: string
+          example: "ch-2-3"
+        section:
+          type: string
+          example: "2.3.1 ROS 2 Topics"
+        excerpt:
+          type: string
+          description: Short excerpt (50-100 chars)
+          example: "Topics use publish-subscribe..."
+        relevance_score:
+          type: number
+          format: float
+          minimum: 0
+          maximum: 1
+          example: 0.92
+
+    ChatSession:
+      type: object
+      properties:
+        session_id:
+          type: string
+          example: "sess-abc123"
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/Message'
+        metadata:
+          type: object
+          additionalProperties: true
+
+    Message:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "msg-def456"
+        role:
+          type: string
+          enum: [user, assistant]
+        content:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        chapter_id:
+          type: string
+        selected_text:
+          type: string
+        sources:
+          type: array
+          items:
+            $ref: '#/components/schemas/Source'
+
+    EmbeddingSearchRequest:
+      type: object
+      required:
+        - query
+      properties:
+        query:
+          type: string
+          description: Search query text
+          example: "sim-to-real transfer"
+        chapter_id:
+          type: string
+          description: Filter by chapter (optional)
+        top_k:
+          type: integer
+          default: 5
+          minimum: 1
+          maximum: 20
+          description: Number of results to return
+
+    EmbeddingSearchResponse:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            type: object
+            properties:
+              chunk_id:
+                type: string
+              chapter_id:
+                type: string
+              section:
+                type: string
+              content:
+                type: string
+              distance:
+                type: number
+                description: Cosine distance (lower = more similar)
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          example: "Invalid request"
+        detail:
+          type: string
+          example: "session_id is required"
+
+tags:
+  - name: Chat
+    description: RAG chatbot endpoints
+  - name: Embeddings
+    description: Vector search endpoints
+  - name: System
+    description: Health and status endpoints

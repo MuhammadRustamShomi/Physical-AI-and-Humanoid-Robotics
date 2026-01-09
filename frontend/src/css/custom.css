@@ -1,0 +1,187 @@
+/**
+ * Physical AI Textbook - Custom Styles
+ * Based on Docusaurus Infima framework
+ */
+
+/* Color scheme */
+:root {
+  --ifm-color-primary: #2e8555;
+  --ifm-color-primary-dark: #29784c;
+  --ifm-color-primary-darker: #277148;
+  --ifm-color-primary-darkest: #205d3b;
+  --ifm-color-primary-light: #33925d;
+  --ifm-color-primary-lighter: #359962;
+  --ifm-color-primary-lightest: #3cad6e;
+  --ifm-code-font-size: 95%;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+
+  /* Custom variables */
+  --ifm-font-family-base: system-ui, -apple-system, "Segoe UI", Roboto, Ubuntu, sans-serif;
+  --ifm-heading-font-family: var(--ifm-font-family-base);
+}
+
+/* Dark mode colors */
+[data-theme='dark'] {
+  --ifm-color-primary: #25c2a0;
+  --ifm-color-primary-dark: #21af90;
+  --ifm-color-primary-darker: #1fa588;
+  --ifm-color-primary-darkest: #1a8870;
+  --ifm-color-primary-light: #29d5b0;
+  --ifm-color-primary-lighter: #32d8b4;
+  --ifm-color-primary-lightest: #4fddbf;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+}
+
+/* Typography for chapter content */
+.markdown {
+  line-height: 1.75;
+}
+
+.markdown h1 {
+  font-size: 2.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.markdown h2 {
+  font-size: 1.75rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--ifm-color-emphasis-300);
+  padding-bottom: 0.5rem;
+}
+
+.markdown h3 {
+  font-size: 1.4rem;
+  margin-top: 1.5rem;
+}
+
+/* Code blocks */
+.markdown pre {
+  border-radius: 8px;
+}
+
+.markdown code {
+  border-radius: 4px;
+}
+
+/* Hardware requirements badge */
+.hardware-requirements {
+  background: var(--ifm-color-warning-contrast-background);
+  border-left: 4px solid var(--ifm-color-warning);
+  padding: 1rem;
+  margin: 1rem 0;
+  border-radius: 0 8px 8px 0;
+}
+
+.hardware-requirements h4 {
+  margin: 0 0 0.5rem 0;
+  color: var(--ifm-color-warning-dark);
+}
+
+.hardware-requirements ul {
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+/* Resource type badge */
+.resource-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-right: 0.5rem;
+}
+
+.resource-badge--cloud {
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+
+.resource-badge--on-prem {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.resource-badge--both {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+[data-theme='dark'] .resource-badge--cloud {
+  background-color: #1e3a5f;
+  color: #93c5fd;
+}
+
+[data-theme='dark'] .resource-badge--on-prem {
+  background-color: #451a03;
+  color: #fcd34d;
+}
+
+[data-theme='dark'] .resource-badge--both {
+  background-color: #064e3b;
+  color: #6ee7b7;
+}
+
+/* Responsive breakpoints */
+/* Mobile (320px+) */
+@media (max-width: 767px) {
+  .markdown h1 {
+    font-size: 1.75rem;
+  }
+
+  .markdown h2 {
+    font-size: 1.4rem;
+  }
+
+  .hardware-requirements {
+    padding: 0.75rem;
+    margin: 0.75rem 0;
+  }
+}
+
+/* Tablet (768px+) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .markdown {
+    max-width: 100%;
+  }
+}
+
+/* Desktop (1024px+) */
+@media (min-width: 1024px) {
+  .markdown {
+    max-width: 100%;
+  }
+}
+
+/* Admonitions - custom styling */
+.admonition {
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+/* Search modal styling */
+.DocSearch-Modal {
+  border-radius: 12px;
+}
+
+/* Table styling */
+.markdown table {
+  display: table;
+  width: 100%;
+}
+
+.markdown th,
+.markdown td {
+  padding: 0.75rem 1rem;
+}
+
+/* Math equations (KaTeX) */
+.katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 1rem 0;
+}
