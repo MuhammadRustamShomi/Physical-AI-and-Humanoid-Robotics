@@ -98,8 +98,8 @@ export default function Home() {
     <Layout
       title={`${siteConfig.title}`}
       description="AI-native textbook for Physical AI and Humanoid Robotics">
-      <HomepageHeader />
-      <main>
+      <main role="main">
+        <HomepageHeader />
         <HomepageModules />
       </main>
     </Layout>
