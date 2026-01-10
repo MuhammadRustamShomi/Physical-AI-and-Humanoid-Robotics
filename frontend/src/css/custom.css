@@ -58,10 +58,50 @@
 /* Code blocks */
 .markdown pre {
   border-radius: 8px;
+  overflow-x: auto;
+  max-width: 100%;
 }
 
 .markdown code {
   border-radius: 4px;
+}
+
+/* Ensure code blocks don't cause horizontal scroll on mobile */
+.prism-code {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+/* Code block container responsive fix */
+[class*="codeBlockContainer"] {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+[class*="codeBlockContent"] {
+  max-width: 100%;
+}
+
+/* Prevent any element from overflowing on mobile */
+@media (max-width: 767px) {
+  .theme-doc-markdown,
+  .markdown,
+  article {
+    overflow-x: hidden;
+  }
+
+  .markdown pre,
+  .prism-code,
+  [class*="codeBlockContainer"] {
+    max-width: calc(100vw - 2rem);
+  }
+
+  /* Tables should scroll horizontally */
+  .markdown table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
 }
 
 /* Hardware requirements badge */
