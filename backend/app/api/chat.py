@@ -1,14 +1,18 @@
 """Chat API endpoints."""
 from datetime import datetime, timedelta, timezone
 import uuid
+import json
 
 from fastapi import APIRouter, HTTPException
+from fastapi.responses import StreamingResponse
+from pydantic import BaseModel
 
 from app.config import get_settings
 from app.models.message import ChatResponse, MessageCreate, Source
 from app.models.session import ChatSession, ChatSessionWithMessages
 from app.services.rag import RAGQueryEngine, get_rag_engine
 from app.services.oos_detector import OutOfScopeDetector, get_oos_detector
+from app.services.openai_chat import get_openai_service, ChatMessage
 
 router = APIRouter(prefix="/chat", tags=["chat"])
 
@@ -175,4 +179,72 @@ async def get_chat_session(session_id: str) -> ChatSessionWithMessages:
     return ChatSessionWithMessages(
         **session_data["session"].model_dump(),
         messages=messages,
+    )
+
+
+# ============================================================================
+# STREAMING CHAT ENDPOINT (OpenAI SDK)
+# ============================================================================
+
+class StreamChatRequest(BaseModel):
+    """Request model for streaming chat."""
+    message: str
+    history: list[dict] | None = None
+
+
+@router.post("/stream")
+async def stream_chat(request: StreamChatRequest):
+    """
+    Stream a chat response using OpenAI.
+
+    This endpoint uses Server-Sent Events (SSE) to stream
+    the response in real-time as it's generated.
+
+    Request body:
+    - message: The user's question
+    - history: Optional list of previous messages [{role, content}]
+
+    Returns:
+    - SSE stream with JSON data chunks containing {content: "..."}
+    """
+
+    async def generate():
+        """Generate SSE stream."""
+        try:
+            openai_service = get_openai_service()
+
+            # Convert history to ChatMessage objects
+            chat_history = None
+            if request.history:
+                chat_history = [
+                    ChatMessage(role=msg["role"], content=msg["content"])
+                    for msg in request.history
+                ]
+
+            # Stream the response
+            async for chunk in openai_service.chat_stream(
+                message=request.message,
+                history=chat_history,
+            ):
+                # Send chunk as SSE data
+                data = json.dumps({"content": chunk})
+                yield f"data: {data}\n\n"
+
+            # Send completion signal
+            yield "data: [DONE]\n\n"
+
+        except Exception as e:
+            # Send error as SSE data
+            error_data = json.dumps({"error": str(e)})
+            yield f"data: {error_data}\n\n"
+            yield "data: [DONE]\n\n"
+
+    return StreamingResponse(
+        generate(),
+        media_type="text/event-stream",
+        headers={
+            "Cache-Control": "no-cache",
+            "Connection": "keep-alive",
+            "X-Accel-Buffering": "no",
+        },
     )

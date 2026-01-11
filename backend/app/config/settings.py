@@ -12,18 +12,27 @@ class Settings(BaseSettings):
         case_sensitive=False,
     )
 
-    # OpenAI API for embeddings
-    openai_api_key: str
+    # OpenRouter API for chat completions
+    openrouter_api_key: str | None = None
+    openrouter_model: str = "meta-llama/llama-3.1-8b-instruct:free"
+    openrouter_base_url: str = "https://openrouter.ai/api/v1"
 
-    # Qdrant Cloud vector database
-    qdrant_api_key: str
-    qdrant_url: str
+    # Cohere API for embeddings
+    cohere_api_key: str | None = None
+    cohere_embed_model: str = "embed-english-v3.0"
 
-    # Neon Serverless PostgreSQL
-    neon_database_url: str
+    # OpenAI API for embeddings (optional if using Cohere)
+    openai_api_key: str | None = None
 
-    # Anthropic API for Claude
-    anthropic_api_key: str
+    # Qdrant Cloud vector database (optional for chat-only mode)
+    qdrant_api_key: str | None = None
+    qdrant_url: str | None = None
+
+    # Neon Serverless PostgreSQL (optional)
+    neon_database_url: str | None = None
+
+    # Anthropic API for Claude (optional if using OpenRouter)
+    anthropic_api_key: str | None = None
 
     # Frontend URL for CORS
     frontend_url: str = "http://localhost:3000"

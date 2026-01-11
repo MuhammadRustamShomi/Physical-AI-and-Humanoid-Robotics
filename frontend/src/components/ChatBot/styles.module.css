@@ -1,0 +1,200 @@
+/**
+ * ChatBot Component Styles
+ *
+ * Styles for the ChatKit-based chatbot interface.
+ * Features responsive design for mobile/tablet/desktop.
+ */
+
+/* Toggle button - fixed position bottom right */
+.toggleButton {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #4a9eff 0%, #2d7dd2 100%);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  box-shadow: 0 4px 12px rgba(74, 158, 255, 0.4);
+  transition: all 0.3s ease;
+  z-index: 9998;
+}
+
+.toggleButton:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(74, 158, 255, 0.5);
+}
+
+.toggleButton:active {
+  transform: scale(0.95);
+}
+
+/* Chat container - positioned above toggle button */
+.chatContainer {
+  position: fixed;
+  bottom: 96px;
+  right: 24px;
+  width: 380px;
+  height: 520px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  z-index: 9999;
+  background: var(--ifm-background-color, #ffffff);
+}
+
+/* Override ChatKit styles for better integration */
+.chatContainer :global(.cs-main-container) {
+  border: none;
+  border-radius: 16px;
+  height: 100%;
+}
+
+.chatContainer :global(.cs-chat-container) {
+  height: 100%;
+}
+
+.chatContainer :global(.cs-conversation-header) {
+  background: linear-gradient(135deg, #4a9eff 0%, #2d7dd2 100%);
+  padding: 12px 16px;
+}
+
+.chatContainer :global(.cs-conversation-header__content) {
+  color: white;
+}
+
+.chatContainer :global(.cs-conversation-header__user-name) {
+  color: white;
+  font-weight: 600;
+}
+
+.chatContainer :global(.cs-message-list) {
+  background: var(--ifm-background-color, #f8f9fa);
+  padding: 12px;
+}
+
+.chatContainer :global(.cs-message__content) {
+  border-radius: 12px;
+  padding: 10px 14px;
+  max-width: 85%;
+}
+
+.chatContainer :global(.cs-message--incoming .cs-message__content) {
+  background: var(--ifm-color-emphasis-200, #e9ecef);
+  color: var(--ifm-font-color-base, #1c1e21);
+}
+
+.chatContainer :global(.cs-message--outgoing .cs-message__content) {
+  background: linear-gradient(135deg, #4a9eff 0%, #2d7dd2 100%);
+  color: white;
+}
+
+.chatContainer :global(.cs-message-input) {
+  border-top: 1px solid var(--ifm-color-emphasis-300, #dee2e6);
+  background: var(--ifm-background-color, #ffffff);
+}
+
+.chatContainer :global(.cs-message-input__content-editor-wrapper) {
+  background: var(--ifm-color-emphasis-100, #f1f3f5);
+  border-radius: 20px;
+  margin: 8px;
+  padding: 8px 16px;
+}
+
+.chatContainer :global(.cs-message-input__content-editor) {
+  background: transparent;
+}
+
+.chatContainer :global(.cs-button--send) {
+  background: #4a9eff;
+  color: white;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+.chatContainer :global(.cs-typing-indicator) {
+  background: var(--ifm-color-emphasis-200, #e9ecef);
+  border-radius: 12px;
+  padding: 8px 12px;
+}
+
+/* Clear button in header */
+.clearButton {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.clearButton:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Dark mode support */
+[data-theme='dark'] .chatContainer {
+  background: var(--ifm-background-color, #1b1b1d);
+}
+
+[data-theme='dark'] .chatContainer :global(.cs-message-list) {
+  background: var(--ifm-background-color, #1b1b1d);
+}
+
+[data-theme='dark'] .chatContainer :global(.cs-message--incoming .cs-message__content) {
+  background: var(--ifm-color-emphasis-200, #3a3a3a);
+  color: var(--ifm-font-color-base, #e3e3e3);
+}
+
+[data-theme='dark'] .chatContainer :global(.cs-message-input) {
+  background: var(--ifm-background-color, #1b1b1d);
+  border-top-color: var(--ifm-color-emphasis-300, #444);
+}
+
+[data-theme='dark'] .chatContainer :global(.cs-message-input__content-editor-wrapper) {
+  background: var(--ifm-color-emphasis-100, #2a2a2a);
+}
+
+/* Responsive design - tablet */
+@media (max-width: 768px) {
+  .chatContainer {
+    width: 340px;
+    height: 480px;
+    right: 16px;
+    bottom: 88px;
+  }
+
+  .toggleButton {
+    right: 16px;
+    bottom: 16px;
+    width: 52px;
+    height: 52px;
+  }
+}
+
+/* Responsive design - mobile */
+@media (max-width: 480px) {
+  .chatContainer {
+    width: calc(100vw - 32px);
+    height: calc(100vh - 160px);
+    max-height: 500px;
+    right: 16px;
+    left: 16px;
+    bottom: 80px;
+  }
+
+  .toggleButton {
+    right: 16px;
+    bottom: 16px;
+    width: 48px;
+    height: 48px;
+  }
+}
