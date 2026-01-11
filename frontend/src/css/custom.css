@@ -1015,3 +1015,124 @@ code {
   color: var(--ifm-font-color-base);
   font-weight: 600;
 }
+
+/* ============================================================================
+   URDU / RTL SUPPORT
+   ============================================================================ */
+
+/* Import Noto Nastaliq Urdu font for proper Urdu rendering */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;500;600;700&display=swap');
+
+/* Urdu content styling - RTL direction */
+.urdu-content {
+  direction: rtl;
+  text-align: right;
+  font-family: 'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', serif;
+  line-height: 2.2;
+}
+
+.urdu-content h1,
+.urdu-content h2,
+.urdu-content h3,
+.urdu-content h4,
+.urdu-content h5,
+.urdu-content h6 {
+  font-family: 'Noto Nastaliq Urdu', var(--font-display);
+  text-align: right;
+}
+
+/* Keep code blocks LTR */
+.urdu-content pre,
+.urdu-content code {
+  direction: ltr;
+  text-align: left;
+  font-family: var(--font-mono);
+}
+
+.urdu-content .prism-code {
+  direction: ltr;
+}
+
+/* Keep inline code readable */
+.urdu-content :not(pre) > code {
+  direction: ltr;
+  display: inline-block;
+}
+
+/* Lists in RTL */
+.urdu-content ul,
+.urdu-content ol {
+  padding-right: 2rem;
+  padding-left: 0;
+}
+
+.urdu-content li {
+  text-align: right;
+}
+
+/* Tables in RTL */
+.urdu-content table {
+  direction: rtl;
+}
+
+.urdu-content th,
+.urdu-content td {
+  text-align: right;
+}
+
+/* Admonitions in RTL */
+.urdu-content .admonition {
+  direction: rtl;
+  text-align: right;
+}
+
+/* Links in RTL */
+.urdu-content a {
+  direction: rtl;
+}
+
+/* Blockquotes in RTL */
+.urdu-content blockquote {
+  border-right: 4px solid var(--ifm-color-primary);
+  border-left: none;
+  padding-right: 1rem;
+  padding-left: 0;
+  margin-right: 0;
+}
+
+/* Math formulas stay LTR */
+.urdu-content .katex,
+.urdu-content .katex-display {
+  direction: ltr;
+}
+
+/* Images and figures stay centered */
+.urdu-content img,
+.urdu-content figure {
+  direction: ltr;
+}
+
+/* ============================================================================
+   AUTH MODAL TRANSITION FIX FOR DOCUSAURUS
+   ============================================================================ */
+.navbar-sidebar--show ~ div [class*="AuthModal"] {
+  z-index: 1100;
+}
+
+/* ============================================================================
+   CHAPTER TOOLBAR ANIMATIONS
+   ============================================================================ */
+@keyframes toolbarSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.chapter-toolbar-enter {
+  animation: toolbarSlideIn 0.3s ease forwards;
+}

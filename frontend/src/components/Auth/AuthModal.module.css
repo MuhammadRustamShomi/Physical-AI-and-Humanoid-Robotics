@@ -1,0 +1,136 @@
+/**
+ * Auth Modal Styles - Neural Circuitry Theme
+ */
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.overlay.visible {
+  opacity: 1;
+}
+
+.modal {
+  background: linear-gradient(135deg, var(--bg-surface) 0%, var(--bg-deep) 100%);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 440px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow:
+    0 0 0 1px rgba(0, 212, 255, 0.1),
+    0 24px 48px rgba(0, 0, 0, 0.5),
+    var(--glow-cyan);
+  transform: scale(0.95) translateY(20px);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.modal.visible {
+  transform: scale(1) translateY(0);
+}
+
+.modal::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--gradient-primary);
+}
+
+.closeButton {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 8px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--ifm-font-color-secondary);
+  transition: all 0.2s ease;
+}
+
+.closeButton:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: var(--ifm-color-primary);
+}
+
+.header {
+  padding: 32px 32px 0;
+  text-align: center;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0 0 8px;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.subtitle {
+  color: var(--ifm-font-color-secondary);
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.content {
+  padding: 24px 32px 32px;
+}
+
+/* Scrollbar for modal */
+.modal::-webkit-scrollbar {
+  width: 6px;
+}
+
+.modal::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.modal::-webkit-scrollbar-thumb {
+  background: rgba(0, 212, 255, 0.3);
+  border-radius: 3px;
+}
+
+/* Mobile responsive */
+@media (max-width: 480px) {
+  .modal {
+    max-width: calc(100% - 32px);
+    margin: 16px;
+  }
+
+  .header {
+    padding: 24px 24px 0;
+  }
+
+  .content {
+    padding: 20px 24px 24px;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+}
