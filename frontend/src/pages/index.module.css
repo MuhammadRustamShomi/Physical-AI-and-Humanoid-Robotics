@@ -648,3 +648,150 @@
     padding: 1.5rem;
   }
 }
+
+/* ============================================================================
+   LIGHT MODE OVERRIDES
+   ============================================================================ */
+:global([data-theme='light']) .heroBanner {
+  background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+}
+
+:global([data-theme='light']) .heroGlow {
+  background: radial-gradient(
+    ellipse at center,
+    rgba(8, 145, 178, 0.12) 0%,
+    rgba(14, 116, 144, 0.06) 40%,
+    transparent 70%
+  );
+}
+
+:global([data-theme='light']) .heroLabel {
+  background: rgba(8, 145, 178, 0.1);
+  border-color: rgba(8, 145, 178, 0.2);
+  color: #0891b2;
+}
+
+:global([data-theme='light']) .heroTitleLine {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+:global([data-theme='light']) .heroTitleAccent {
+  background: linear-gradient(135deg, #0891b2 0%, #0e7490 50%, #0f766e 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+:global([data-theme='light']) .heroSubtitle {
+  color: #475569;
+}
+
+:global([data-theme='light']) .heroStatValue {
+  background: linear-gradient(135deg, #0891b2 0%, #0e7490 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+:global([data-theme='light']) .heroStatLabel {
+  color: #64748b;
+}
+
+:global([data-theme='light']) .heroStatDivider {
+  background: linear-gradient(180deg, transparent 0%, rgba(8, 145, 178, 0.3) 50%, transparent 100%);
+}
+
+:global([data-theme='light']) .heroScroll {
+  color: #64748b;
+}
+
+:global([data-theme='light']) .heroScrollIcon {
+  border-color: rgba(8, 145, 178, 0.3);
+}
+
+:global([data-theme='light']) .heroScrollDot {
+  background: #0891b2;
+}
+
+:global([data-theme='light']) .modulesSection {
+  background: linear-gradient(180deg, #f1f5f9 0%, #f8fafc 100%);
+}
+
+:global([data-theme='light']) .sectionLabel {
+  background: rgba(8, 145, 178, 0.1);
+  color: #0891b2;
+}
+
+:global([data-theme='light']) .sectionTitle {
+  color: #0f172a;
+}
+
+:global([data-theme='light']) .sectionSubtitle {
+  color: #475569;
+}
+
+:global([data-theme='light']) .moduleCard {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+:global([data-theme='light']) .moduleCard:hover {
+  background: rgba(255, 255, 255, 1);
+  box-shadow:
+    0 0 0 1px var(--module-color, #0891b2),
+    0 20px 40px rgba(0, 0, 0, 0.1),
+    0 0 40px color-mix(in srgb, var(--module-color, #0891b2) 10%, transparent);
+}
+
+:global([data-theme='light']) .moduleNumber span {
+  color: #64748b;
+}
+
+:global([data-theme='light']) .moduleIcon {
+  background: rgba(0, 0, 0, 0.03);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+:global([data-theme='light']) .moduleTitle {
+  color: #0f172a;
+}
+
+:global([data-theme='light']) .moduleDescription {
+  color: #475569;
+}
+
+:global([data-theme='light']) .moduleTopic {
+  background: rgba(0, 0, 0, 0.03);
+  border-color: rgba(0, 0, 0, 0.08);
+  color: #64748b;
+}
+
+:global([data-theme='light']) .featuresSection {
+  background: #f8fafc;
+  border-top-color: rgba(8, 145, 178, 0.1);
+}
+
+:global([data-theme='light']) .featureCard {
+  background: rgba(255, 255, 255, 0.8);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+:global([data-theme='light']) .featureCard:hover {
+  background: rgba(255, 255, 255, 1);
+  border-color: rgba(8, 145, 178, 0.2);
+}
+
+:global([data-theme='light']) .featureIcon {
+  filter: none;
+}
+
+:global([data-theme='light']) .featureTitle {
+  color: #0f172a;
+}
+
+:global([data-theme='light']) .featureDescription {
+  color: #475569;
+}

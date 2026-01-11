@@ -8,6 +8,7 @@ import styles from './index.module.css';
 /**
  * Animated Circuit Background
  * Creates a dynamic grid of circuit-like patterns
+ * Adapts colors for light/dark mode
  */
 function CircuitBackground() {
   const canvasRef = useRef(null);
@@ -19,6 +20,16 @@ function CircuitBackground() {
     const ctx = canvas.getContext('2d');
     let animationId;
     let particles = [];
+
+    // Get theme-aware colors
+    const getColors = () => {
+      const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+      return {
+        bg: isLight ? 'rgba(248, 250, 252, 0.1)' : 'rgba(10, 10, 15, 0.1)',
+        grid: isLight ? 'rgba(8, 145, 178, 0.04)' : 'rgba(0, 212, 255, 0.03)',
+        particle: isLight ? '8, 145, 178' : '0, 212, 255',
+      };
+    };
 
     const resize = () => {
       canvas.width = window.innerWidth;
@@ -42,8 +53,8 @@ function CircuitBackground() {
       }
     };
 
-    const drawGrid = () => {
-      ctx.strokeStyle = 'rgba(0, 212, 255, 0.03)';
+    const drawGrid = (colors) => {
+      ctx.strokeStyle = colors.grid;
       ctx.lineWidth = 1;
 
       const gridSize = 60;
@@ -62,10 +73,12 @@ function CircuitBackground() {
     };
 
     const animate = () => {
-      ctx.fillStyle = 'rgba(10, 10, 15, 0.1)';
+      const colors = getColors();
+
+      ctx.fillStyle = colors.bg;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      drawGrid();
+      drawGrid(colors);
 
       particles.forEach((p, i) => {
         p.x += p.vx;
@@ -77,7 +90,7 @@ function CircuitBackground() {
         // Draw particle
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(0, 212, 255, ${p.opacity})`;
+        ctx.fillStyle = `rgba(${colors.particle}, ${p.opacity})`;
         ctx.fill();
 
         // Connect nearby particles
@@ -90,7 +103,7 @@ function CircuitBackground() {
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = `rgba(0, 212, 255, ${0.1 * (1 - dist / 120)})`;
+            ctx.strokeStyle = `rgba(${colors.particle}, ${0.1 * (1 - dist / 120)})`;
             ctx.lineWidth = 0.5;
             ctx.stroke();
           }

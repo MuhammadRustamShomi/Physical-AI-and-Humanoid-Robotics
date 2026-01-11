@@ -115,6 +115,41 @@ html {
   --glass-bg: rgba(255, 255, 255, 0.9);
   --glass-border: rgba(8, 145, 178, 0.2);
   --glow-cyan: 0 4px 20px rgba(8, 145, 178, 0.15);
+
+  /* Navbar colors for light mode */
+  --ifm-navbar-background-color: rgba(255, 255, 255, 0.95);
+  --ifm-navbar-link-color: #0f172a;
+  --ifm-navbar-link-hover-color: #0891b2;
+}
+
+/* Light mode navbar specific fixes */
+[data-theme='light'] .navbar {
+  background: rgba(255, 255, 255, 0.95);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+[data-theme='light'] .navbar__title {
+  background: linear-gradient(135deg, #0891b2 0%, #0e7490 50%, #0f766e 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+[data-theme='light'] .navbar__link {
+  color: #1e293b;
+  font-weight: 500;
+}
+
+[data-theme='light'] .navbar__link:hover {
+  color: #0891b2;
+}
+
+[data-theme='light'] .navbar__link--active {
+  color: #0891b2;
+}
+
+[data-theme='light'] .navbar::before {
+  background: linear-gradient(135deg, #0891b2 0%, #0e7490 50%, #0f766e 100%);
 }
 
 /* ============================================================================
