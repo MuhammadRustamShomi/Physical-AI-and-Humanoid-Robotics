@@ -88,7 +88,7 @@ const config = {
             label: 'Curriculum',
           },
           {
-            href: 'https://github.com/physical-ai/textbook',
+            href: 'https://github.com/MuhammadRustamShomi/Physical-AI-and-Humanoid-Robotics',
             label: 'GitHub',
             position: 'right',
           },
@@ -115,7 +115,7 @@ const config = {
             items: [
               {
                 label: 'GitHub',
-                href: 'https://github.com/physical-ai/textbook',
+                href: 'https://github.com/MuhammadRustamShomi/Physical-AI-and-Humanoid-Robotics',
               },
             ],
           },
