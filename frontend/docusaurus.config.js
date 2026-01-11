@@ -49,8 +49,9 @@ const config = {
           sidebarPath: './sidebars.js',
           remarkPlugins: [remarkMath],
           rehypePlugins: [rehypeKatex],
-          showLastUpdateTime: true,
-          showLastUpdateAuthor: true,
+          // Disabled for Vercel deployment (no git history in build environment)
+          showLastUpdateTime: false,
+          showLastUpdateAuthor: false,
         },
         blog: false,
         theme: {
@@ -87,7 +88,7 @@ const config = {
             label: 'Curriculum',
           },
           {
-            href: 'https://github.com/physical-ai/textbook',
+            href: 'https://github.com/MuhammadRustamShomi/Physical-AI-and-Humanoid-Robotics',
             label: 'GitHub',
             position: 'right',
           },
@@ -114,7 +115,7 @@ const config = {
             items: [
               {
                 label: 'GitHub',
-                href: 'https://github.com/physical-ai/textbook',
+                href: 'https://github.com/MuhammadRustamShomi/Physical-AI-and-Humanoid-Robotics',
               },
             ],
           },
