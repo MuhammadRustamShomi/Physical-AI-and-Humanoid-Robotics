@@ -68,6 +68,12 @@ def create_app() -> FastAPI:
 app = create_app()
 
 
+# Root endpoint for basic health check
+@app.get("/")
+async def root():
+    return {"status": "ok", "message": "Physical AI Backend is running"}
+
+
 if __name__ == "__main__":
     import uvicorn
 

@@ -33,9 +33,11 @@ class DatabaseService:
     def __init__(self):
         """Initialize database connection."""
         self.database_url = os.getenv("NEON_DATABASE_URL")
+        self._initialized = False
         if not self.database_url:
             print("Warning: NEON_DATABASE_URL not set. Database features disabled.")
-        self._init_tables()
+        else:
+            self._init_tables()
 
     def _get_connection(self):
         """Get database connection."""
