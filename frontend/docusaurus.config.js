@@ -92,10 +92,6 @@ const config = {
             label: 'GitHub',
             position: 'right',
           },
-          {
-            type: 'custom-userMenu',
-            position: 'right',
-          },
         ],
       },
       footer: {
