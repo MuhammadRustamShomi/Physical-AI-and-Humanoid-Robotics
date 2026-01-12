@@ -4,13 +4,18 @@
  */
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 
-// API base URL - defaults to localhost for development
+// API base URL - configured via environment variable or defaults
 const getApiBase = () => {
+  // Check for Docusaurus custom field (injected at build time)
+  if (typeof window !== 'undefined' && window.__DOCUSAURUS__?.siteConfig?.customFields?.apiBaseUrl) {
+    return window.__DOCUSAURUS__.siteConfig.customFields.apiBaseUrl;
+  }
+
+  // Fallback: localhost for development, otherwise require explicit config
   if (typeof window !== 'undefined') {
-    // In production, use relative path or configure in docusaurus.config.js
     return window.location.hostname === 'localhost'
       ? 'http://localhost:8000/api/v1'
-      : '/api/v1';
+      : null; // Will show error if not configured
   }
   return 'http://localhost:8000/api/v1';
 };
@@ -95,6 +100,12 @@ export function AuthProvider({ children }) {
     setError(null);
     setLoading(true);
 
+    if (!API_BASE) {
+      setError('Backend API not configured. Please set API_BASE_URL environment variable.');
+      setLoading(false);
+      return { success: false, error: 'Backend API not configured' };
+    }
+
     try {
       const response = await fetch(`${API_BASE}/auth/signup`, {
         method: 'POST',
@@ -139,6 +150,12 @@ export function AuthProvider({ children }) {
   const signIn = useCallback(async (email, password) => {
     setError(null);
     setLoading(true);
+
+    if (!API_BASE) {
+      setError('Backend API not configured. Please set API_BASE_URL environment variable.');
+      setLoading(false);
+      return { success: false, error: 'Backend API not configured' };
+    }
 
     try {
       const response = await fetch(`${API_BASE}/auth/signin`, {

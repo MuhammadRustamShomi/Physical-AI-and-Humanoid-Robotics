@@ -37,8 +37,13 @@ def create_app() -> FastAPI:
     # Configure CORS
     allowed_origins = [
         "http://localhost:3000",
+        "https://physical-ai-and-humanoid-robotics-hdum6v5dd.vercel.app",
+        "https://physical-ai-textbook.vercel.app",
         settings.frontend_url,
     ]
+
+    # Filter out empty/None values and duplicates
+    allowed_origins = list(set(filter(None, allowed_origins)))
 
     if settings.is_development:
         allowed_origins.append("*")

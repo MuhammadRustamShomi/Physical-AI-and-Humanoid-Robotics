@@ -18,6 +18,11 @@ const config = {
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
 
+  // Custom fields accessible via useDocusaurusContext
+  customFields: {
+    apiBaseUrl: process.env.API_BASE_URL || 'http://localhost:8000/api/v1',
+  },
+
   i18n: {
     defaultLocale: 'en',
     locales: ['en'],
