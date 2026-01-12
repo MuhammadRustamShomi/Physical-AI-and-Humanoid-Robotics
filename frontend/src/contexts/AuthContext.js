@@ -17,6 +17,28 @@ const getApiBase = () => {
 
 const API_BASE = getApiBase();
 
+/**
+ * Safely parse JSON from a response.
+ * Handles empty responses and invalid JSON gracefully.
+ */
+const safeJsonParse = async (response) => {
+  const text = await response.text();
+  if (!text || text.trim() === '') {
+    // Empty response - return a structured error
+    return {
+      detail: response.ok
+        ? 'Empty response from server'
+        : `Server error: ${response.status} ${response.statusText}`
+    };
+  }
+  try {
+    return JSON.parse(text);
+  } catch (e) {
+    // Invalid JSON - return the text as error detail
+    return { detail: text || `Server error: ${response.status}` };
+  }
+};
+
 const AuthContext = createContext(null);
 
 /**
@@ -47,8 +69,14 @@ export function AuthProvider({ children }) {
       });
 
       if (response.ok) {
-        const userData = await response.json();
-        setUser(userData);
+        const userData = await safeJsonParse(response);
+        if (userData && userData.id) {
+          setUser(userData);
+        } else {
+          // Invalid user data
+          localStorage.removeItem('auth_token');
+          setUser(null);
+        }
       } else {
         // Token invalid, clear it
         localStorage.removeItem('auth_token');
@@ -81,10 +109,14 @@ export function AuthProvider({ children }) {
         }),
       });
 
-      const data = await response.json();
+      const data = await safeJsonParse(response);
 
       if (!response.ok) {
         throw new Error(data.detail || 'Signup failed');
+      }
+
+      if (!data.access_token || !data.user) {
+        throw new Error('Invalid response from server');
       }
 
       // Store token and user
@@ -92,8 +124,13 @@ export function AuthProvider({ children }) {
       setUser(data.user);
       return { success: true, user: data.user };
     } catch (err) {
-      setError(err.message);
-      return { success: false, error: err.message };
+      // Provide more helpful error messages for common issues
+      let errorMessage = err.message;
+      if (err.name === 'TypeError' && err.message.includes('fetch')) {
+        errorMessage = 'Unable to connect to server. Please ensure the backend is running.';
+      }
+      setError(errorMessage);
+      return { success: false, error: errorMessage };
     } finally {
       setLoading(false);
     }
@@ -112,10 +149,14 @@ export function AuthProvider({ children }) {
         body: JSON.stringify({ email, password }),
       });
 
-      const data = await response.json();
+      const data = await safeJsonParse(response);
 
       if (!response.ok) {
         throw new Error(data.detail || 'Sign in failed');
+      }
+
+      if (!data.access_token || !data.user) {
+        throw new Error('Invalid response from server');
       }
 
       // Store token and user
@@ -123,8 +164,13 @@ export function AuthProvider({ children }) {
       setUser(data.user);
       return { success: true, user: data.user };
     } catch (err) {
-      setError(err.message);
-      return { success: false, error: err.message };
+      // Provide more helpful error messages for common issues
+      let errorMessage = err.message;
+      if (err.name === 'TypeError' && err.message.includes('fetch')) {
+        errorMessage = 'Unable to connect to server. Please ensure the backend is running.';
+      }
+      setError(errorMessage);
+      return { success: false, error: errorMessage };
     } finally {
       setLoading(false);
     }
@@ -163,10 +209,14 @@ export function AuthProvider({ children }) {
         body: JSON.stringify({ name, profile }),
       });
 
-      const data = await response.json();
+      const data = await safeJsonParse(response);
 
       if (!response.ok) {
         throw new Error(data.detail || 'Profile update failed');
+      }
+
+      if (!data.id) {
+        throw new Error('Invalid response from server');
       }
 
       setUser(data);
