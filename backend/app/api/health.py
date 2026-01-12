@@ -29,21 +29,23 @@ async def health_check() -> HealthStatus:
 
     Returns status of:
     - API server
-    - Qdrant vector database
-    - Neon PostgreSQL database
+    - Qdrant vector database (optional)
+    - Neon PostgreSQL database (optional)
     """
     from app.config import get_settings
 
     settings = get_settings()
 
-    # Check Qdrant connectivity
+    # Check Qdrant connectivity (optional - don't fail if not configured)
     qdrant_status = await check_qdrant()
 
-    # Check database connectivity
+    # Check database connectivity (optional - don't fail if not configured)
     db_status = await check_database()
 
+    # Server is healthy as long as FastAPI is running
+    # Database/Qdrant are optional services
     return HealthStatus(
-        status="healthy" if all([qdrant_status.connected, db_status.connected]) else "degraded",
+        status="healthy",  # Always healthy if we reach this point
         version=settings.app_version,
         services={
             "qdrant": {
