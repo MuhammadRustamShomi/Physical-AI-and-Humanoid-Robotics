@@ -7,8 +7,14 @@ from pydantic import BaseModel
 router = APIRouter()
 
 
+class SimpleHealthResponse(BaseModel):
+    """Simple health check for Railway/load balancers."""
+
+    status: str
+
+
 class HealthStatus(BaseModel):
-    """Health check response model."""
+    """Detailed health check response model."""
 
     status: str
     version: str
@@ -22,15 +28,28 @@ class ServiceStatus(BaseModel):
     message: str | None = None
 
 
-@router.get("/health", response_model=HealthStatus)
-async def health_check() -> HealthStatus:
+@router.get("/health", response_model=SimpleHealthResponse)
+async def health_check() -> SimpleHealthResponse:
     """
-    Check application health and service connectivity.
+    Simple health check for Railway deployment.
+
+    Returns immediately with HTTP 200 - no external service checks.
+    This endpoint is used by Railway's health probe.
+    """
+    return SimpleHealthResponse(status="ok")
+
+
+@router.get("/health/detailed", response_model=HealthStatus)
+async def health_check_detailed() -> HealthStatus:
+    """
+    Detailed health check with service connectivity status.
 
     Returns status of:
     - API server
     - Qdrant vector database (optional)
     - Neon PostgreSQL database (optional)
+
+    Use this endpoint for debugging, not for load balancer health checks.
     """
     from app.config import get_settings
 

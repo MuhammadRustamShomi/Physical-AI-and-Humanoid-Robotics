@@ -40,5 +40,8 @@ COPY --chown=appuser:appuser . .
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1
 
-# Run application - use shell form to expand $PORT variable
-CMD uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}
+# Expose port (Railway sets PORT dynamically)
+EXPOSE 8000
+
+# Run application - explicitly use sh -c for proper $PORT expansion
+CMD ["sh", "-c", "uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}"]
