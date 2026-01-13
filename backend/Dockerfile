@@ -41,7 +41,7 @@ ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1
 
 # Expose port (Railway sets PORT dynamically)
-EXPOSE 8000
+EXPOSE 8080
 
-# Run application with error trapping
-CMD ["sh", "-c", "echo 'PORT=${PORT}' && python -c 'import main; print(\"Import OK\")' && uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}"]
+# Run application - using Python for reliable PORT handling
+CMD python -c "import os; port = int(os.environ.get('PORT', 8080)); print(f'Starting on port {port}'); import uvicorn; uvicorn.run('main:app', host='0.0.0.0', port=port)"
