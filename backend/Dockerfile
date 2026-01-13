@@ -43,8 +43,5 @@ ENV PYTHONUNBUFFERED=1 \
 # Expose port (Railway sets PORT dynamically)
 EXPOSE 8000
 
-# Debug: List files to verify structure (remove after debugging)
-RUN ls -la && echo "---" && ls -la app/ 2>/dev/null || echo "No app/ directory"
-
-# Run application - explicitly use sh -c for proper $PORT expansion
-CMD ["sh", "-c", "echo 'Starting on port ${PORT:-8000}' && uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}"]
+# Run application with error trapping
+CMD ["sh", "-c", "echo 'PORT=${PORT}' && python -c 'import main; print(\"Import OK\")' && uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}"]
