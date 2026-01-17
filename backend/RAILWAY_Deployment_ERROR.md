@@ -1,36 +1,25 @@
-# Railway Deployment Fix - Health Check Timeout
+# Railway Deployment Fix
 
-## Problem
-Railway deployment was failing with health check timeout errors. The app was not responding to health check requests at `/api/v1/health`.
+## Latest Fix (Build Failure)
 
-## Root Causes Identified
+### Problem
+Build was failing due to multi-stage Docker build complexity and missing system dependencies.
 
-1. **Fragile Dockerfile CMD**: The Python one-liner was difficult to debug and could fail silently
-   ```dockerfile
-   # OLD - problematic
-   CMD python -c "import os; port = int(os.environ.get('PORT', 8080)); ..."
-   ```
+### Solution Applied
+1. **Simplified Dockerfile** - Single stage build (no multi-stage complexity)
+2. **Added system dependencies** - `libpq-dev` for psycopg2, `build-essential` for bcrypt
+3. **Cleaned requirements.txt** - Removed duplicate httpx, removed testing deps
+4. **Added Docker HEALTHCHECK** - Built-in container health monitoring
 
-2. **No startup logging**: Import errors and startup failures were not visible in Railway logs
+## Previous Fix (Health Check Timeout)
 
-3. **Excessive health timeout**: 600s timeout was too long; issues weren't surfaced quickly
+### Problem
+Railway deployment was failing with health check timeout errors.
 
-## Fixes Applied
-
-### 1. Simplified Dockerfile CMD (`Dockerfile:47`)
-```dockerfile
-# NEW - clean and debuggable
-CMD ["python", "main.py"]
-```
-
-### 2. Added Startup Logging (`main.py`)
-- Configured logging to stdout for Railway visibility
-- Added import error handling with clear error messages
-- Log Python version and PORT environment on startup
-
-### 3. Updated Railway Config (`railway.json`)
-- Reduced `healthcheckTimeout` from 600s to 120s
-- Increased `restartPolicyMaxRetries` to 5
+### Solution Applied
+1. Simplified Dockerfile CMD to `["python", "main.py"]`
+2. Added startup logging to stdout for Railway visibility
+3. Reduced `healthcheckTimeout` from 600s to 120s
 
 ## Deployment Checklist
 

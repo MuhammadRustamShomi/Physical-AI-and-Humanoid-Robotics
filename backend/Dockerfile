@@ -1,40 +1,24 @@
 # Physical AI Textbook Backend
-# Multi-stage build for smaller image
-
-# Stage 1: Build stage
-FROM python:3.11-slim as builder
+FROM python:3.11-slim
 
 WORKDIR /app
 
-# Install build dependencies
+# Install system dependencies (required for psycopg2, bcrypt, etc.)
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
-    && rm -rf /var/lib/apt/lists/*
+    libpq-dev \
+    && rm -rf /var/lib/apt/lists/* \
+    && apt-get clean
 
-# Create virtual environment
-RUN python -m venv /opt/venv
-ENV PATH="/opt/venv/bin:$PATH"
+# Upgrade pip
+RUN pip install --no-cache-dir --upgrade pip
 
-# Install Python dependencies
+# Install Python dependencies first (better caching)
 COPY requirements.txt .
-RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt
-
-# Stage 2: Production stage
-FROM python:3.11-slim as production
-
-WORKDIR /app
-
-# Copy virtual environment from builder
-COPY --from=builder /opt/venv /opt/venv
-ENV PATH="/opt/venv/bin:$PATH"
-
-# Create non-root user
-RUN useradd --create-home --shell /bin/bash appuser
-USER appuser
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy application code
-COPY --chown=appuser:appuser . .
+COPY . .
 
 # Set environment variables
 ENV PYTHONUNBUFFERED=1 \
@@ -43,5 +27,9 @@ ENV PYTHONUNBUFFERED=1 \
 # Expose port (Railway sets PORT dynamically)
 EXPOSE 8080
 
-# Run application using the main.py entrypoint
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:${PORT:-8080}/api/v1/health')" || exit 1
+
+# Run application
 CMD ["python", "main.py"]
