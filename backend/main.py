@@ -1,12 +1,37 @@
 """FastAPI application entry point for Physical AI Textbook backend."""
 import os
+import sys
+import logging
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
+# Configure logging early for Railway visibility
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    stream=sys.stdout,
+)
+logger = logging.getLogger(__name__)
 
-from app.api import health, chat, auth, content
-from app.config import get_settings
+# Log startup immediately
+logger.info("Starting Physical AI Backend...")
+logger.info(f"Python version: {sys.version}")
+logger.info(f"PORT environment: {os.environ.get('PORT', 'not set')}")
+
+try:
+    from fastapi import FastAPI
+    from fastapi.middleware.cors import CORSMiddleware
+    logger.info("FastAPI imported successfully")
+except ImportError as e:
+    logger.error(f"Failed to import FastAPI: {e}")
+    sys.exit(1)
+
+try:
+    from app.api import health, chat, auth, content
+    from app.config import get_settings
+    logger.info("App modules imported successfully")
+except ImportError as e:
+    logger.error(f"Failed to import app modules: {e}")
+    sys.exit(1)
 
 
 @asynccontextmanager
@@ -77,9 +102,19 @@ async def root():
 if __name__ == "__main__":
     import uvicorn
 
-    uvicorn.run(
-        "main:app",
-        host="0.0.0.0",
-        port=int(os.getenv("PORT", 8000)),
-        reload=get_settings().is_development,
-    )
+    # Get port from environment (Railway sets this)
+    port = int(os.environ.get("PORT", 8080))
+
+    logger.info(f"Starting uvicorn server on 0.0.0.0:{port}")
+
+    try:
+        uvicorn.run(
+            "main:app",
+            host="0.0.0.0",
+            port=port,
+            reload=False,  # Never reload in production
+            log_level="info",
+        )
+    except Exception as e:
+        logger.error(f"Failed to start server: {e}")
+        sys.exit(1)

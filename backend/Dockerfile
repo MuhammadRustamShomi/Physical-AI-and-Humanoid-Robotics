@@ -43,5 +43,5 @@ ENV PYTHONUNBUFFERED=1 \
 # Expose port (Railway sets PORT dynamically)
 EXPOSE 8080
 
-# Run application - using Python for reliable PORT handling
-CMD python -c "import os; port = int(os.environ.get('PORT', 8080)); print(f'Starting on port {port}'); import uvicorn; uvicorn.run('main:app', host='0.0.0.0', port=port)"
+# Run application using the main.py entrypoint
+CMD ["python", "main.py"]
